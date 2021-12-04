@@ -50,12 +50,15 @@ export default class Contact extends React.Component {
     });
   }
   handleRemove() {
-    this.setState({
-      contactData: update(this.state.contactData, {
-        $splice: [[this.state.selectedKey, 1]]
-      }),
-      selectedKey: -1
-    });
+    console.log(this.state.selectedKey,"asd")
+    if(this.state.selectedKey > 0) {
+      this.setState({
+        contactData: update(this.state.contactData, {
+          $splice: [[this.state.selectedKey, 1]]
+        }),
+        selectedKey: -1
+      });
+    }
   }
   handleEdit(name, phone) {
     this.setState({
@@ -67,7 +70,6 @@ export default class Contact extends React.Component {
       })
     });
   }
-
 
   render() {
     const mapToComponents = (data) => {
@@ -88,6 +90,8 @@ export default class Contact extends React.Component {
         <ContactDetails 
           isSelected={this.state.selectedKey != -1 ? true : false} 
           contact={this.state.contactData[this.state.selectedKey]}
+          onRemove={this.handleRemove}
+          onEdit={this.handleEdit}
         />
         <ContactCreate 
           onCreate={this.handleCreate}
